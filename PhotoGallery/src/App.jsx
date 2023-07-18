@@ -1,35 +1,46 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import {useRef} from 'react';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const inputRef = useRef(null);
+
+  const handleClick = () => {
+    // 👇️ open file input box on click of another element
+    inputRef.current.click();
+  };
+
+  const handleFileChange = event => {
+    const fileObj = event.target.files && event.target.files[0];
+    if (!fileObj) {
+      return;
+    }
+
+    console.log('fileObj is', fileObj);
+
+    // 👇️ reset file input
+    event.target.value = null;
+
+    // 👇️ is now empty
+    console.log(event.target.files);
+
+    // 👇️ can still access file object here
+    console.log(fileObj);
+    console.log(fileObj.name);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div>
+      <input
+        style={{display: 'none'}}
+        ref={inputRef}
+        type="file"
+        onChange={handleFileChange}
+      />
 
-export default App
+      <button onClick={handleClick}>Open file upload box</button>
+    </div>
+  );
+};
+
+export default App;
+
