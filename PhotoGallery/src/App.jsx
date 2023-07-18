@@ -5,7 +5,7 @@ const App = () => {
   const inputRef = useRef(null);
 
   const handleClick = () => {
-    // 👇️ open file input box on click of another element
+    //open file input box on click of another element
     inputRef.current.click();
   };
 
@@ -17,13 +17,13 @@ const App = () => {
 
     console.log('fileObj is', fileObj);
 
-    // 👇️ reset file input
+    //reset file input
     event.target.value = null;
 
-    // 👇️ is now empty
+    //is now empty
     console.log(event.target.files);
 
-    // 👇️ can still access file object here
+    //can still access file object here
     console.log(fileObj);
     console.log(fileObj.name);
   };
@@ -37,7 +37,7 @@ const App = () => {
         onChange={handleFileChange}
       />
 
-      <button onClick={handleClick}>Open file upload box</button>
+      <button onClick={handleClick}>Upload Photo</button>
     </div>
   );
 };
