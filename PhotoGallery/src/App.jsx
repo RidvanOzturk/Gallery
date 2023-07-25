@@ -1,46 +1,38 @@
-import './App.css'
-import {useRef} from 'react';
+import React, { useState } from "react";
 
-const App = () => {
-  const inputRef = useRef(null);
+const UploadAndDisplayImage = () => {
 
-  const handleClick = () => {
-    //open file input box on click of another element
-    inputRef.current.click();
-  };
-
-  const handleFileChange = event => {
-    const fileObj = event.target.files && event.target.files[0];
-    if (!fileObj) {
-      return;
-    }
-
-    console.log('fileObj is', fileObj);
-
-    //reset file input
-    event.target.value = null;
-
-    //is now empty
-    console.log(event.target.files);
-
-    //can still access file object here
-    console.log(fileObj);
-    console.log(fileObj.name);
-  };
+  const [selectedImage, setSelectedImage] = useState(null);
 
   return (
     <div>
-      <input
-        style={{display: 'none'}}
-        ref={inputRef}
-        type="file"
-        onChange={handleFileChange}
-      />
+      <h1>Press the Button</h1>
 
-      <button onClick={handleClick}>Upload Photo</button>
+      {selectedImage && (
+        <div className="floating">
+          <img
+            alt="not found"
+            width={"250px"}
+            src={URL.createObjectURL(selectedImage)}
+          />
+          <br />
+          <button onClick={() => setSelectedImage(null)}>Remove</button>
+        </div>
+      )}
+
+      <br />
+      <br />
+      
+      <input
+        type="file"
+        name="myImage"
+        onChange={(event) => {
+          console.log(event.target.files[0]);
+          setSelectedImage(event.target.files[0]);
+        }}
+      />
     </div>
   );
 };
 
-export default App;
-
+export default UploadAndDisplayImage;
