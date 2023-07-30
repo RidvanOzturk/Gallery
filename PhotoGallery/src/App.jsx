@@ -2,23 +2,25 @@ import React, { useState } from "react";
 
 const UploadAndDisplayImage = () => {
 
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImages, setSelectedImages] = useState([]);
+
+
+  const buttonHandle = () => {
+    setSelectedImages([]);
+  }
 
   return (
     <div>
       <h1>Press the Button</h1>
 
-      {selectedImage && (
+      {
+      selectedImages &&
         <div className="floating">
-          <img
-            alt="not found"
-            width={"250px"}
-            src={URL.createObjectURL(selectedImage)}
-          />
+          {selectedImages.map(image=> ( <img alt="not found" width="250px" src={URL.createObjectURL(image)}/> ))}
           <br />
-          <button onClick={() => setSelectedImage(null)}>Remove</button>
+          <button onClick={buttonHandle}>Remove</button>
         </div>
-      )}
+      }
 
       <br />
       <br />
@@ -28,7 +30,8 @@ const UploadAndDisplayImage = () => {
         name="myImage"
         onChange={(event) => {
           console.log(event.target.files[0]);
-          setSelectedImage(event.target.files[0]);
+        
+          setSelectedImages(current => [...current, event.target.files[0]]);
         }}
       />
     </div>
